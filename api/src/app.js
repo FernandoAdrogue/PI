@@ -22,6 +22,7 @@ server.use((req, res, next) => {
   next();
 });
 
+//se establece la raiz de las rutas del server
 server.use('/', routes);
 
 // Error catching endware.
