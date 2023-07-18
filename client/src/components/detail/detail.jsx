@@ -19,10 +19,16 @@ const Detail =() =>{
             setError({})
         }
         catch(error){
+            error.response?
             setError({...error,
                 status:error.response.status,
                 message:error.response.statusText,
                 description:error.response.data.error})
+            :
+            setError({...error,
+                status:'500',
+                message:error.message,
+                description:'Failed to load resource'})
         }
     }
    

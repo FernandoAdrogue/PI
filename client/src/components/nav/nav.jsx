@@ -1,7 +1,7 @@
 import styles from './nav.module.css'
 import { useLocation, useNavigate} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
-import {getActivities, getAllCountries, getContinents, orderCountryAlf, orderCountryPop, setPage} from "../../redux/actions"
+import {getActivities, getAllCountries, getContinents, orderCountryAlf, orderCountryPop, resetError, setPage} from "../../redux/actions"
 import {getCountries, filterByActivities, filterByContinent, resetFilter } from '../../redux/actions'
 import { memo, useEffect, useState } from 'react'
 
@@ -22,6 +22,7 @@ const Nav =()=> {
     const {continents} = useSelector((state)=>state)
     const {activities} = useSelector((state)=>state)
     const {countries} = useSelector((state)=>state)
+    const {errors} = useSelector((state)=>state)
 
     const activitiesMenu = [...new Set([...activities.map(activity=>activity.name)])]
     
@@ -82,11 +83,17 @@ const Nav =()=> {
         })
     }
 
+    const handleGoToActivities = ()=>{
+        resetError()
+        navigate("/activities")
+    }
+
     const handleGoToHome = ()=>{
         dispatch(getAllCountries())
         dispatch(getActivities())
         dispatch(getContinents())
         dispatch(setPage(1))
+        dispatch(resetError())
         setValorSelect({
             selectContinent:'',
             selectActivity:'',
@@ -96,11 +103,13 @@ const Nav =()=> {
     }
 
     useEffect(()=>{
-        dispatch(getContinents())
-        dispatch(getActivities())
-        dispatch(setPage(1))
+        if(!errors.stateError){
+            dispatch(getContinents())
+            dispatch(getActivities())
+            dispatch(setPage(1))
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[countries,criterio])
+    },[countries,criterio,errors])
     
     return( location !== '/' ?
     <>
@@ -108,8 +117,8 @@ const Nav =()=> {
 	        <h1>Paises del Mundo</h1>
             <nav className={styles.navBar}>
                 <span onClick={handleGoToHome} className={styles.goToHome}>Inicio</span>
-                {location === '/home' ?<>
-                    <span onClick={()=>(navigate("/activities"))} className={styles.goToActivities}>Activities</span>
+                {location === '/home' && !errors.stateError ?<>
+                    <span onClick={handleGoToActivities} className={styles.goToActivities}>Activities</span>
                     <input type="text" onChange={handleInputSerch} placeholder='País ?'value={valueInput}/>
                     <button onClick={handleSerch} className={styles.findCountry}>Buscar</button>
                 </>
@@ -117,7 +126,7 @@ const Nav =()=> {
                 
             </nav>
         </header>
-        {location === '/home' ?
+        {location === '/home' && !errors.stateError ?
         <div className={styles.menuContainer}>
             <aside className={styles.menuOrder}>
                 <div className={styles.menuTitle}>

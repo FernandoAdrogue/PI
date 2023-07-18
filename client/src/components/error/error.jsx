@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { reserError } from "../../redux/actions"
+import { resetError } from "../../redux/actions"
 import styles from "../error/error.module.css"
 import { useNavigate } from "react-router-dom"
 
@@ -10,7 +10,7 @@ const Error = ({status,message,description,reset}) => {
     const {errors} = useSelector(state=>state)
     const {stateError} = errors
     const handleReset = () => {
-        dispatch(reserError())
+        dispatch(resetError())
         navigate("/home")
     }
 

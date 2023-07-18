@@ -15,9 +15,9 @@ function App() {
 
    const dispatch = useDispatch()
    const {countries} = useSelector(state=>state)
+
    useEffect(()=>{
       if(countries.length === 0) dispatch(getAllCountries())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dispatch,countries])
 
   return (

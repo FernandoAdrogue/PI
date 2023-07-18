@@ -17,16 +17,12 @@ export const SET_PAGE = "SET_PAGE"
 export const getAllCountries = ()=> async dispatch => {
     const endpoint = 'http://localhost:3001/countries'
     try {
-        return async(dispatch)=>{
             const {data} = await axios(endpoint)
             return dispatch({
                 type: GET_ALL_COUNTRIES,
                 payload: data,
            })
-        }
-    // eslint-disable-next-line no-unreachable
     } catch (error) {
-        console.log(error.message)
         return dispatch({
             type: ERROR,
             payload : error
@@ -37,16 +33,13 @@ export const getAllCountries = ()=> async dispatch => {
 export const getActivities = ()=> async dispatch =>{
     const endpoint = 'http://localhost:3001/activities'
     try {
-        return async(dispatch)=>{
             const {data} = await axios(endpoint)
             return dispatch({
                 type: GET_ACTIVITIES,
                 payload: data,
             })
-        }
     // eslint-disable-next-line no-unreachable
     } catch (error) {
-        console.log(error.message)
         return dispatch({
             type: ERROR,
             payload : error
@@ -64,7 +57,6 @@ export const getCountries = (criterio) => async dispatch => {
             })
         }
     catch(error){
-        console.log(error);
         return dispatch({
              type: ERROR,
              payload : error
@@ -79,7 +71,7 @@ export const setPage = (page) =>{
     }
 }
     
-export const reserError =() => {
+export const resetError =() => {
     return {
         type: RESET_ERROR
     }

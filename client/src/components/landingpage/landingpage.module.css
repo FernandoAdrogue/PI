@@ -2,14 +2,14 @@
     display: flex;
     flex-direction: column;
     align-content: center;
-    min-height: 91.5vh;
-    width: 100vw;
+    min-height: 93.6vh;
     margin: 0;
 }
 
 .imageContainer{
-    height: auto;
-    width: auto;
+    margin: auto;
+    height: 480px;
+    /* width: 360px; */
     border-radius: 10%;
 }
 
@@ -21,4 +21,7 @@
     border-color: dimgray;
     padding: 10px;
     width: 8rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
 }
