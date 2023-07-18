@@ -37,7 +37,7 @@ const Form = () => {
     
     const validateCreate = (activity,countriesSelect) => {
         const errors = {}
-        if (activity.name.length < 3) errors.name = true
+        if (activity.name.trim().length < 3) errors.name = true
 
         if (activity.difficulty === '') errors.difficulty = 'error'
         
@@ -99,7 +99,7 @@ const Form = () => {
     }, [dispatch,activity,countriesSelect,errors])
 
     return (
-    <>
+    <div className={styles.principalContainer}>
         {stateError?<Error status={"500"} message={errors.error.message} description={"Fallo al crear la actividad"}/>
         :
         <div className={styles.container}>
@@ -164,7 +164,7 @@ const Form = () => {
             </form>
         </div>
         }
-    </>
+    </div>
     )
 }
 

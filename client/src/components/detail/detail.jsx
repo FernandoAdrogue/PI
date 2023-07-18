@@ -37,7 +37,7 @@ const Detail =() =>{
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
-    return(<>
+    return(<div className={styles.principalContainer}>
         {country.id?
             <div className={styles.detailContainer}>
                 <div className={styles.titleDetail}>
@@ -62,7 +62,7 @@ const Detail =() =>{
                 {error.status&&<Error status={error.status} message={error.message} description={error.description}/>}
             </>
         }
-        </>
+        </div>
     )
 }
 

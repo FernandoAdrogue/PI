@@ -11,6 +11,7 @@ footer{
     margin-right: auto;
     margin-left: auto;
     border-top: 1px solid #dee2e6;
+    width: calc(100% - 30px);
 }
 
 .container {

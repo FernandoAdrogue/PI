@@ -8,7 +8,7 @@
     padding-top: 5px;
     padding-bottom: 0px;
     margin-bottom: 0px;
-    min-height: 75.8vh;
+    min-height: calc(100vh - 42px - 103px);
 }
 
 .pageSelector{
