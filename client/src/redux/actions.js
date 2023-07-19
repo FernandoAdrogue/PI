@@ -14,6 +14,7 @@ export const ERROR = "ERROR"
 export const RESET_ERROR = "RESET_ERROR"
 export const SET_PAGE = "SET_PAGE"
 
+//hace una request de todos los countries a la api
 export const getAllCountries = ()=> async dispatch => {
     const endpoint = 'http://localhost:3001/countries'
     try {
@@ -30,6 +31,7 @@ export const getAllCountries = ()=> async dispatch => {
     }
 }
 
+//hace una request de todas las activities a la api
 export const getActivities = ()=> async dispatch =>{
     const endpoint = 'http://localhost:3001/activities'
     try {
@@ -38,7 +40,6 @@ export const getActivities = ()=> async dispatch =>{
                 type: GET_ACTIVITIES,
                 payload: data,
             })
-    // eslint-disable-next-line no-unreachable
     } catch (error) {
         return dispatch({
             type: ERROR,
@@ -47,6 +48,7 @@ export const getActivities = ()=> async dispatch =>{
     }
 }
 
+//haceuna request a la api de los countries que su nombre contenga el criterio de busqueda
 export const getCountries = (criterio) => async dispatch => {
     try {
         const endpoint = `http://localhost:3001/countries?name=${criterio}`
@@ -63,37 +65,43 @@ export const getCountries = (criterio) => async dispatch => {
         })
     }
 }
-
+ //setea la pagina seleccionada en el estado global
 export const setPage = (page) =>{
     return {
         type: SET_PAGE,
         payload: page
     }
 }
-    
+
+//restablece el estado de error global
 export const resetError =() => {
     return {
         type: RESET_ERROR
     }
 }
 
+//se cargan en el estado global todos los continentes
 export const getContinents = () => {
     return {
         type: GET_CONTINENTS
     }
 }
 
+//se aplica el orden alfabetico ascendente/descendente segun criterio
 export const orderCountryAlf = (criterio) => {
     if(criterio === "DES") return {type: ORDER_ALFABETICO_DES}
     return {type: ORDER_ALFABETICO_ASC}
 
 }
+
+//se aplica el orden por poblacion ascendente/descendente segun criterio
 export const orderCountryPop = (criterio) => {
     if(criterio=== "DES") return {type: ORDER_POPULATION_DES}
     return {type: ORDER_POPULATION_ASC}
 
 }
 
+//se aplica el filtro segun continente
 export const filterByContinent = (continent)=> {
     return {
         type: FILTER_CONTINENT,
@@ -101,6 +109,7 @@ export const filterByContinent = (continent)=> {
     }
 }
 
+//se aplica el filtro segun actividad
 export const filterByActivities = (activity)=> {
     return {
         type: FILTER_ACTIVITIES,
@@ -108,6 +117,7 @@ export const filterByActivities = (activity)=> {
     }
 }
 
+//se aplica el reset de todos los filtros
 export const resetFilter = () => {
     return {
         type: RESET_FILTER

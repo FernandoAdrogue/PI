@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { resetError } from "../../redux/actions"
 import styles from "../error/error.module.css"
 import { useNavigate } from "react-router-dom"
@@ -7,15 +7,14 @@ import { useNavigate } from "react-router-dom"
 const Error = ({status,message,description,reset}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {errors} = useSelector(state=>state)
-    const {stateError} = errors
+
     const handleReset = () => {
         dispatch(resetError())
         navigate("/home")
     }
 
     return (
-        <div className={stateError ? styles.errorContainer:styles.noErrorContainer}>
+        <div className={styles.errorContainer}>
             <div className={styles.cardError}>
                 <div>
                     {message?<h2>{message}</h2>:<h2>Not Found!</h2>}

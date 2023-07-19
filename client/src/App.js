@@ -16,10 +16,13 @@ function App() {
    const dispatch = useDispatch()
    const {countries} = useSelector(state=>state)
 
+   //si el estado global contries esta vacio se actualiza con todos los paises
    useEffect(()=>{
       if(countries.length === 0) dispatch(getAllCountries())
   },[dispatch,countries])
 
+  //el componente nav esta disponible en todas las rutas
+  //su define la ruta * para los errores 404 del cliente
   return (
     <div on className='App'>
          <Nav/>

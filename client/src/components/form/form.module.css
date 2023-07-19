@@ -137,6 +137,16 @@
     filter: brightness(110%)
 }
 
+img:hover::after {
+    content: attr(title);
+    background-color: black;
+    color: white;
+    padding: 5px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
 .btn {
     position: relative;
     border: none;

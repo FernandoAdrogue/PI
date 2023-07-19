@@ -18,6 +18,7 @@ const initialState =  {
 
 export const reducer = (state = initialState,action)=>{
     switch (action.type) {
+        //establece un estado de error global
         case ERROR : return {
             ...state,
             errors:{
@@ -25,6 +26,7 @@ export const reducer = (state = initialState,action)=>{
                 error: action.payload
             }
         }
+        //reestablece el estado de error global
         case RESET_ERROR : return {
             ...state,
             errors:{
@@ -32,6 +34,7 @@ export const reducer = (state = initialState,action)=>{
                 error: null,
             }
         }
+        //establece todo los paises obtenidos del servidor,establece la cantidad de paginas de 10 elementos y crea la primer pagina y la selecciona
         case GET_ALL_COUNTRIES : return {
             ...state,
             countries: action.payload,
@@ -43,6 +46,7 @@ export const reducer = (state = initialState,action)=>{
                 pageCountries: state.sortedCountries.slice(0,10)
             }
         }
+        //establece los paises devueltos en la busqueda por nombre , establece la cantidad de paginas y crea la primer pagina y la selecciona
         case GET_COUNTRIES : return {
             ...state,
             countries: action.payload,
@@ -54,6 +58,7 @@ export const reducer = (state = initialState,action)=>{
                 pageCountries: state.sortedCountries.slice(0,10)
             }
         }
+        //establece la pagina seleccionada, establece la cantidad de paginas y crea la pagina
         case SET_PAGE : return {
             ...state,
             pagination: {
@@ -64,15 +69,17 @@ export const reducer = (state = initialState,action)=>{
             }
 
         }
+        //establece todas las actividades en el estado gloval obtenidas desde servidos
         case GET_ACTIVITIES : return {
             ...state,
             activities: action.payload
         }
+        //filtra los continentes de todos los paises , sin repeticiones
         case GET_CONTINENTS : return {
             ...state,
             continents: [...new Set([...state.countries].map(country=>country.continent))]
         }
-
+        //ordena por orden alfavetico ascendente, crea la primer pagina y la selecciona
         case ORDER_ALFABETICO_ASC : return {
             ...state,
             countries: [...state.countries],
@@ -84,6 +91,7 @@ export const reducer = (state = initialState,action)=>{
                 pageCountries: state.sortedCountries.slice(0,10)
             }
         }
+        //ordena por orden alfavetico descendente, crea la primer pagina y la selecciona
         case ORDER_ALFABETICO_DES : return {
             ...state,
             countries: [...state.countries],
@@ -95,6 +103,7 @@ export const reducer = (state = initialState,action)=>{
                 pageCountries: state.sortedCountries.slice(0,10)
             }
         }
+        //ordena por poblacion ascendente, crea la primer pagina y la selecciona
         case ORDER_POPULATION_ASC : return {
             ...state,
             countries: [...state.countries],
@@ -106,6 +115,7 @@ export const reducer = (state = initialState,action)=>{
                 pageCountries: state.sortedCountries.slice(0,10)
             }
         }
+        //ordena por poblacion descendente, crea la primer pagina y la selecciona
         case ORDER_POPULATION_DES : return {
             ...state,
             countries: [...state.countries],
@@ -117,7 +127,7 @@ export const reducer = (state = initialState,action)=>{
                 pageCountries: state.sortedCountries.slice(0,10)
             }
         }
-
+        //filtra por continente, crea la primer pagina y la selecciona
         case FILTER_CONTINENT : return {
             ...state,
             countries: [...state.countries],
@@ -130,7 +140,7 @@ export const reducer = (state = initialState,action)=>{
                 pageCountries: state.sortedCountries.slice(0,10)
             }
         }
-        
+        //filtra por actividades, crea la primer pagina y la selecciona
         case FILTER_ACTIVITIES : return {
             ...state,
             countries: [...state.countries],
@@ -145,7 +155,7 @@ export const reducer = (state = initialState,action)=>{
                 pageCountries: state.sortedCountries.slice(0,10)
             }
         }
-
+        //quita todos los filtros y ordenamientos, crea la primer pagina y la selecciona
         case RESET_FILTER :return {
             ...state,
             countries: [...state.countries],

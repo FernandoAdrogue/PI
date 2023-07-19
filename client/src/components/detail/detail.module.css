@@ -1,5 +1,6 @@
 .principalContainer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     min-height: calc(-145px + 100vh);
 }

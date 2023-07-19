@@ -60,12 +60,14 @@ const Form = () => {
     
     const handleSelect = (event) => {
         const {value} = event.target
-        const [id,image] = value.split(",")
+        const [id,image,name] = value.split(",")
         setCountryMenu(id)
         if (value !== 'countries') {
-            setCountriesSelect(
-                [...countriesSelect, [id,image]]
-                )
+            if(countriesSelect.filter(element=>element[0]===value.split(",")[0]).length===0){
+                setCountriesSelect(
+                    [...countriesSelect, [id,image,name]]
+                    )    
+            }
         }
     }
         
@@ -145,14 +147,14 @@ const Form = () => {
                     <div className={styles.item}>
                         <select name="country" onChange={handleSelect} className={styles.input} value={countryMenu}>
                             <option value='countries' >--Select Countries--</option>
-                            {countries?.map((country, index) => <option key={index} value={[country.id,country.flag]}>{country.name}</option>)}
+                            {countries?.map((country, index) => <option key={index} value={[country.id,country.flag,country.name]}>{country.name}</option>)}
                         </select>
                         {error.countries && <span className={styles.x} >❌</span>}
                     </div>
                 </div>
                 <div>
                     {countriesSelect?.map((element, index) => 
-                    <span key={index} className={styles.span} style={{backgroundImage:`url(${element[1]})`, backgroundSize: '62px 28px', backgroundPosition:'left center', backgroundRepeat: 'no-repeat'}} value={element}>{element[0]}
+                    <span key={index} className={styles.span} title={element[2]} style={{backgroundImage:`url(${element[1]})`, backgroundSize: '62px 28px', backgroundPosition:'left center', backgroundRepeat: 'no-repeat'}} value={element}>{element[0]}
                         <button onClick={handleDelete} className={styles.btnDelete} value={element}>x</button>
                     </span>)}
                 </div>
