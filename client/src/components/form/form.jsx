@@ -37,15 +37,15 @@ const Form = () => {
     
     const validateCreate = (activity,countriesSelect) => {
         const errors = {}
-        if (activity.name.trim().length < 3) errors.name = true
+        if (activity.name===''||activity.name.trim().length < 3||activity.name.length > 255) errors.name = true
 
-        if (activity.difficulty === '') errors.difficulty = 'error'
+        if (activity.difficulty === '') errors.difficulty = true
         
-        if (activity.duration === '') errors.duration = 'error'
+        if (activity.duration === ''|| activity.duration < 1 ||activity.duration > 100 ) errors.duration = true
         
-        if (activity.season === '') errors.season = 'error'
+        if (activity.season === '') errors.season = true
         
-        if (!countriesSelect[0]) errors.countries = 'error'
+        if (!countriesSelect[0]) errors.countries = true
         
         return errors
     }
@@ -71,16 +71,18 @@ const Form = () => {
         }
     }
         
-    const handleCreate = (event) => async dispatch=>{
+    const handleCreate = async(event) => {
+        event.preventDefault()
+        console.log(activity,countriesSelect);
         try{
-            event.preventDefault()
             const endpoint = 'http://localhost:3001/activities'
             await axios.post(endpoint, {activity:activity,countries:countriesSelect.map(element=>element[0])})
             clearForm()
         }catch(error){
-            dispatch({
-                type: ERROR,
-                payload : error})
+            console.log(error);
+            return dispatch({
+                    type: ERROR,
+                    payload : error})
             }
     }
         
@@ -112,7 +114,7 @@ const Form = () => {
                 <div className={styles.itemList}>
                     <label className={styles.label} >Name</label>
                     <div className={styles.item}>
-                        <input type="text" name="name" onChange={handleInput} className={styles.input} autoComplete='off' value={activity.name}/>
+                        <input className={styles.name} title={"Min 3 - Max 255 caracteres"} type="text" name="name" placeholder='Ingrese una actividad' onChange={handleInput} autoComplete='off' value={activity.name}/>
                         {error.name && <span className={styles.x} >❌</span>}
                     </div>
                     <label className={styles.label} >Difficulty</label>
@@ -129,7 +131,7 @@ const Form = () => {
                     </div>
                     <label className={styles.label} >Duration</label>
                     <div className={styles.item}>
-                        <input type="number" name="duration" onChange={handleInput} className={styles.input} min='1' max='100' value={activity.duration}/>
+                        <input type="number" name="duration" title='Un numero entre 1-100' placeholder='Ingrese la duracion en hs.' onChange={handleInput} className={styles.duration} min='1' max='100' value={activity.duration}/>
                         {error.duration && <span className={styles.x} >❌</span>}
                     </div>
                     <label className={styles.label} >Season</label>

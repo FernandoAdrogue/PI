@@ -5,16 +5,20 @@ import {getActivities, getAllCountries, getContinents, orderCountryAlf, orderCou
 import {getCountries, filterByActivities, filterByContinent, resetFilter } from '../../redux/actions'
 import { memo, useEffect, useState } from 'react'
 
+//renderiza la navbar y la sidebar, hace los dispatch para la busqueda el filtrado y el ordenamiento
 const Nav =()=> {
+
     const location = useLocation().pathname
     const dispatch = useDispatch()
-    
     const navigate = useNavigate()
 
+    //estado local para el control de los menues desplegables de continents y activities
     const [valorSelect, setValorSelect] = useState({
         selectContinent:'',
         selectActivity:''
     })
+
+    //estados locales para el control de los inputs
     const [valueInput, setValueInput] = useState('')
     const [criterio, setCriterio] = useState({})
     const [cheked,setCheked] = useState(true)
@@ -24,17 +28,21 @@ const Nav =()=> {
     const {countries} = useSelector((state)=>state)
     const {errors} = useSelector((state)=>state)
 
+
+    //arreglo de actividades sin elementos repetidos para mostrar en el menú desplegable de activities
     const activitiesMenu = [...new Set([...activities.map(activity=>activity.name)])]
     
-    
+    //hace un dispath para aplicar el orden alfabetico ASC/DESC segun criterio
     const handleOrderALf = () =>{
         dispatch(orderCountryAlf(criterio.criterio))
     }
 
+    //hace un dispath para aplicar el orden por poblacion ASC/DESC segun criterio
     const handleOrderPop = () =>{
         dispatch(orderCountryPop(criterio.criterio))
     }
 
+    //hace un dispath para reestablecer los filtros y aplicar el filtrado por continentes
     const handleFilterContinent = (event) =>{
         dispatch(resetFilter())
         const {value} = event.target
@@ -45,6 +53,7 @@ const Nav =()=> {
         dispatch(filterByContinent(value))
     }
 
+    //hace un dispath para reestablecer los filtros y aplicar el filtrado por actividades
     const handleFilterActivities = (event) =>{
         dispatch(resetFilter())
         const {value} = event.target
@@ -54,6 +63,8 @@ const Nav =()=> {
             })
             dispatch(filterByActivities(value))
     }
+
+    //reestablece el estado de los menues y hace un dispatch para reestablecer los filtros y actualizar el estado global de countries y activities
     const handleresetFilter = () => {
         setValorSelect({
             selectContinent:'',
@@ -84,7 +95,7 @@ const Nav =()=> {
     }
 
     const handleGoToActivities = ()=>{
-        resetError()
+        dispatch(resetError())
         navigate("/activities")
     }
 

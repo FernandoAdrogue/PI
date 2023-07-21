@@ -61,6 +61,45 @@
     margin-bottom: 5px;
 }
 
+.name:hover::after{
+    content: attr(title);
+    background-color: black;
+    color: white;
+    padding: 5px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+.name{
+    background: #ddd;
+    border: 1px solid aliceblue;
+    color: #333;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 200px;
+    height: 22px;
+}
+.duration:hover::after{
+    content: attr(title);
+    background-color: black;
+    color: white;
+    padding: 5px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+.duration{
+    background: #ddd;
+    border: 1px solid aliceblue;
+    color: #333;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 200px;
+    height: 22px;
+}
+
 .x {
     flex-grow: 1;
     display: flex;

@@ -1,6 +1,6 @@
 import styles from './page.module.css'
 import Card from '../card/card'
-
+//renderiza una pagina con los countries que le llegan por props
 const Page = ({countriesSelect}) => {
 
     return (

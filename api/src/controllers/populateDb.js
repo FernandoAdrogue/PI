@@ -37,6 +37,7 @@ const populateDb = async () => {
   }
   catch(error){
     //si falla el proceso de poblado de la base de datos lo informa por consola
+    console.log(error.message);
     console.log("Error populating Database!!");
   }
 }

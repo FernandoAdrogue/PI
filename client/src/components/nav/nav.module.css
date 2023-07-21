@@ -119,6 +119,7 @@
     transition: filter 250ms;
     user-select: none;
     touch-action: manipulation;
+    max-width:150px;
 }
 
 .menuFilter button:hover {
