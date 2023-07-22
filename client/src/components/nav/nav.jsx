@@ -151,11 +151,11 @@ const Nav =()=> {
                 </div>
                 <div className={styles.criterioConainer}>
                     <div>
-                        <label for={"Ascendente"}>Ascendente</label>
+                        <label htmlFor={"Ascendente"}>Ascendente</label>
                         <input checked={cheked} type="radio" name="criterio" id="Ascendente" onChange={handleselectCriterio} value="ASC"/>
                     </div>
                     <div>
-                        <label for={"Descendente"}>Descendente</label>
+                        <label htmlFor={"Descendente"}>Descendente</label>
                         <input type="radio" name="criterio" id="Descendente" onChange={handleselectCriterio} value="DES"/>
                     </div>
                 </div>
@@ -165,12 +165,12 @@ const Nav =()=> {
 	            <div className={styles.menuTitle}>
                     <h2>Filter</h2>
                 </div>
-	            <select name="selectContinent" onChange={handleFilterContinent} defaultValue={''} value={valorSelect.selectContinent}>
-                    <option value='' selected disabled>Filter by Continent</option>
+	            <select name="selectContinent" title="Filter by Continent" onChange={handleFilterContinent} value={valorSelect.selectContinent}>
+                    <option value='' disabled>Filter by Continent</option>
                     {continents?.map(((continent,index)=><option key={index} value={continent}>{continent}</option>))}
                 </select>
-                <select name="selectActivity" onChange={handleFilterActivities} defaultValue={''} value={valorSelect.selectActivity}>
-                    <option value="" selected disabled>Filter by Activities</option>
+                <select name="selectActivity" title="Filter by Activities" onChange={handleFilterActivities} value={valorSelect.selectActivity}>
+                    <option value="" disabled>Filter by Activities</option>
                     {activitiesMenu?.map(((activity,index)=><option key={index} value={activity}>{activity}</option>))}
                 </select>
                 <button onClick={handleresetFilter}>Quitar filtros</button>

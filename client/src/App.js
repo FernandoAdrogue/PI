@@ -24,7 +24,7 @@ function App() {
   //el componente nav esta disponible en todas las rutas
   //su define la ruta * para los errores 404 del cliente
   return (
-    <div on className='App'>
+    <div className='App'>
          <Nav/>
          <Routes>
             <Route path='/' element={<LandingPage/>}/>
