@@ -8,7 +8,7 @@ const Page = ({countriesSelect}) => {
             {countriesSelect ?
             <div className={styles.cardsContainer}>
                 {countriesSelect.map((elem,index)=>
-                    <Card key={index} id={elem.id} name={`Pais: ${elem.name}`} continent={`Continente: ${elem.continent}`} image={elem.flag}/>
+                    <Card key={index} id={elem.id} name={elem.name} continent={`Continent: ${elem.continent}`} image={elem.flag}/>
                 )}
             </div>:
             null}

@@ -125,13 +125,13 @@ const Nav =()=> {
     return( location !== '/' ?
     <>
         <header className={styles.headerContainer}>
-	        <h1>Paises del Mundo</h1>
+	        <h1>World Countries</h1>
             <nav className={styles.navBar}>
-                <span onClick={handleGoToHome} className={styles.goToHome}>Inicio</span>
+                <span onClick={handleGoToHome} className={styles.goToHome}>Home</span>
                 {location === '/home' && !errors.stateError ?<>
                     <span onClick={handleGoToActivities} className={styles.goToActivities}>Activities</span>
                     <input type="text" onChange={handleInputSerch} placeholder='País ?'value={valueInput}/>
-                    <button onClick={handleSerch} className={styles.findCountry}>Buscar</button>
+                    <button onClick={handleSerch} className={styles.findCountry}>Search</button>
                 </>
                 :null}
                 
@@ -144,18 +144,18 @@ const Nav =()=> {
                     <h2>Order</h2>
                 </div>
                 <div>
-                    <button onClick={handleOrderALf}>Alfabetico</button>
+                    <button onClick={handleOrderALf}>Alphabetical</button>
                 </div>
                 <div>
-                    <button onClick={handleOrderPop}>Población</button>
+                    <button onClick={handleOrderPop}>Population</button>
                 </div>
                 <div className={styles.criterioConainer}>
                     <div>
-                        <label htmlFor={"Ascendente"}>Ascendente</label>
+                        <label htmlFor={"Ascendente"}>Ascending</label>
                         <input checked={cheked} type="radio" name="criterio" id="Ascendente" onChange={handleselectCriterio} value="ASC"/>
                     </div>
                     <div>
-                        <label htmlFor={"Descendente"}>Descendente</label>
+                        <label htmlFor={"Descendente"}>Descending</label>
                         <input type="radio" name="criterio" id="Descendente" onChange={handleselectCriterio} value="DES"/>
                     </div>
                 </div>
@@ -173,7 +173,7 @@ const Nav =()=> {
                     <option value="" disabled>Filter by Activities</option>
                     {activitiesMenu?.map(((activity,index)=><option key={index} value={activity}>{activity}</option>))}
                 </select>
-                <button onClick={handleresetFilter}>Quitar filtros</button>
+                <button onClick={handleresetFilter}>Clear Filters</button>
             </aside>
         </div>
         :null}
