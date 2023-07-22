@@ -7,12 +7,9 @@ const {Country} = require("../db")
 //informa la evolucion del proceso por consola
 const populateDb = async () => {
   try{
-    //verifica si no fue poblada la BD
-    const exist = await Country.count()
-    if(!exist){
+      console.log("Reading API...")
       //realiza la peticion a la API
-    console.log("Reading API...")
-    const {data} = await axios('https://restcountries.com/v3.1/all')
+      const {data} = await axios('https://restcountries.com/v3.1/all')
       //prepara un arreglo con todos los datos obtenidos de la api
       console.log("Preparing data package...")
       const bulckData = data?.map( country => {
@@ -27,13 +24,12 @@ const populateDb = async () => {
           population: country.population
         } 
       })
-      //Inserta los datos ontenidos en la api de forma masiba en la DB
+      //Inserta los datos obtenidos desde la api de forma masiba en la DB
       console.log("Populating Database...");
-      await Country.bulkCreate(bulckData)
+      await Country.bulkCreate(bulckData,{ ignoreDuplicates: true })
 
       //informa por consola que el proceso se completo correctamante
-      console.log("Base de Datos Completa!");
-    } 
+      console.log("Database Updated!");
   }
   catch(error){
     //si falla el proceso de poblado de la base de datos lo informa por consola
