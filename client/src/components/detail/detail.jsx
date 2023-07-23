@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom"
 import axios from "axios"
 import Error from '../error/error'
 import { memo, useEffect, useState } from 'react'
+import { BASE_API_URL, PORT } from '../../apiData'
 
 const Detail =() =>{
 
@@ -13,7 +14,7 @@ const Detail =() =>{
 
     const getCountry = async() =>{
         try {
-            const endpoint = `http://localhost:3001/countries/${id}`
+            const endpoint = `${BASE_API_URL}:${PORT}/countries/${id}`
             const {data} = await axios(endpoint)
             setCountry(data)
             setError({})

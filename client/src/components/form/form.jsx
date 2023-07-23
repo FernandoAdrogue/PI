@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import styles from './form.module.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllCountries } from '../../redux/actions'
+import { getAllCountries, handleError } from '../../redux/actions'
 import axios from 'axios'
-import { ERROR } from '../../redux/actions'
 import Error from '../error/error'
 import Alert from '../alert/alert'
+import { BASE_API_URL,PORT } from '../../apiData'
 
 const Form = () => {
 
@@ -46,18 +46,18 @@ const Form = () => {
 
     
     const validateCreate = (activity,countriesSelect) => {
-        const errors = {}
-        if (activity.name===''||activity.name.trim().length < 3||activity.name.length > 255) errors.name = true
+        const inputErrors = {}
+        if (activity.name===''||activity.name.trim().length < 3||activity.name.length > 255) inputErrors.name = true
 
-        if (activity.difficulty === '') errors.difficulty = true
+        if (activity.difficulty === '') inputErrors.difficulty = true
         
-        if (activity.duration === ''|| activity.duration < 1 ||activity.duration > 100 ) errors.duration = true
+        if (activity.duration === ''|| activity.duration < 1 ||activity.duration > 100 ) inputErrors.duration = true
         
-        if (activity.season === '') errors.season = true
+        if (activity.season === '') inputErrors.season = true
         
-        if (!countriesSelect[0]) errors.countries = true
+        if (!countriesSelect[0]) inputErrors.countries = true
         
-        return errors
+        return inputErrors
     }
     
     const handleInput = (event) => {
@@ -85,15 +85,13 @@ const Form = () => {
         event.preventDefault()
         console.log(activity,countriesSelect);
         try{
-            const endpoint = 'http://localhost:3001/activities'
+            const endpoint = `${BASE_API_URL}:${PORT}/activities`
             await axios.post(endpoint, {activity:activity,countries:countriesSelect.map(element=>element[0])})
             mostrarAlertHandler()
             clearForm()
         }catch(error){
-            return dispatch({
-                    type: ERROR,
-                    payload : error})
-            }
+            return dispatch(handleError(error))
+        }
     }
         
         const handleDelete = (event) => {
@@ -112,7 +110,7 @@ const Form = () => {
     return (
     <div className={styles.principalContainer}>
         {stateError?
-            <Error status={"500"} message={errors.error.message} description={"Fallo al crear la actividad"}/>
+            <Error status={errors.error.response?errors.error.response.status:"500"} message={errors.error.message} description={errors.error.response?error.response.data.error:"Can’t connect to server"}/>
             :
             <div className={styles.container}>
                 {showAlert && <Alert onClose={cerrarAlertHandler} />}
