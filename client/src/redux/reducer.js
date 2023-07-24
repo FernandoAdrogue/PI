@@ -16,6 +16,16 @@ const initialState =  {
     }
 }
 
+//Actualiza los estados del paginado
+const updatePagination = (state,pageSelect,sortedCountries) =>{
+    return {
+        ...state.pagination,
+        pageSelect:pageSelect,
+        totalPages:Math.ceil(sortedCountries.length / 10),
+        pageCountries: sortedCountries.slice((pageSelect*10)-10,pageSelect*10)
+    }
+}
+
 export const reducer = (state = initialState,action)=>{
     switch (action.type) {
         //establece un estado de error global
@@ -26,6 +36,7 @@ export const reducer = (state = initialState,action)=>{
                 error: action.payload
             }
         }
+
         //reestablece el estado de error global
         case RESET_ERROR : return {
             ...state,
@@ -34,112 +45,84 @@ export const reducer = (state = initialState,action)=>{
                 error: null,
             }
         }
+
         //establece todo los paises obtenidos del servidor,establece la cantidad de paginas de 10 elementos y crea la primer pagina y la selecciona
         case GET_ALL_COUNTRIES : return {
             ...state,
             countries: action.payload,
             sortedCountries: action.payload,
-            pagination: {
-                ...state.pagination,
-                pageSelect:1,
-                totalPages:Math.ceil(state.sortedCountries.length / 10),
-                pageCountries: state.sortedCountries.slice(0,10)
-            }
+            pagination: updatePagination(state,1,state.sortedCountries)
+           
         }
+
         //establece los paises devueltos en la busqueda por nombre , establece la cantidad de paginas y crea la primer pagina y la selecciona
         case GET_COUNTRIES : return {
             ...state,
             countries: action.payload,
             sortedCountries: action.payload,
-            pagination: {
-                ...state.pagination,
-                pageSelect:1,
-                totalPages:Math.ceil(state.sortedCountries.length / 10),
-                pageCountries: state.sortedCountries.slice(0,10)
-            }
+            pagination: updatePagination(state,1,state.sortedCountries)
+
         }
+
         //establece la pagina seleccionada, establece la cantidad de paginas y crea la pagina
         case SET_PAGE : return {
             ...state,
-            pagination: {
-                ...state.pagination,
-                pageSelect: action.payload,
-                totalPages:Math.ceil(state.sortedCountries.length / 10),
-                pageCountries: state.sortedCountries.slice((action.payload*10)-10,action.payload*10)
-            }
-
+            pagination: updatePagination(state,action.payload,state.sortedCountries)
         }
+
         //establece todas las actividades en el estado gloval obtenidas desde servidos
         case GET_ACTIVITIES : return {
             ...state,
             activities: action.payload
         }
+
         //filtra los continentes de todos los paises , sin repeticiones
         case GET_CONTINENTS : return {
             ...state,
             continents: [...new Set([...state.countries].map(country=>country.continent))]
         }
+
         //ordena por orden alfavetico ascendente, crea la primer pagina y la selecciona
         case ORDER_ALFABETICO_ASC : return {
             ...state,
             countries: [...state.countries],
             sortedCountries: [...state.sortedCountries].sort((country,next)=>country.name.localeCompare(next.name)),
-            pagination: {
-                ...state.pagination,
-                pageSelect:1,
-                totalPages:Math.ceil(state.sortedCountries.length / 10),
-                pageCountries: state.sortedCountries.slice(0,10)
-            }
+            pagination: updatePagination(state,1,state.sortedCountries)
         }
+
         //ordena por orden alfavetico descendente, crea la primer pagina y la selecciona
         case ORDER_ALFABETICO_DES : return {
             ...state,
             countries: [...state.countries],
             sortedCountries: [...state.sortedCountries].sort((country,next)=>next.name.localeCompare(country.name)),
-            pagination: {
-                ...state.pagination,
-                pageSelect:1,
-                totalPages:Math.ceil(state.sortedCountries.length / 10),
-                pageCountries: state.sortedCountries.slice(0,10)
-            }
+            pagination: updatePagination(state,1,state.sortedCountries)
         }
+
         //ordena por poblacion ascendente, crea la primer pagina y la selecciona
         case ORDER_POPULATION_ASC : return {
             ...state,
             countries: [...state.countries],
-            sortedCountries: [...state.sortedCountries].sort((country,next)=>country.population - next.population),
-            pagination: {
-                ...state.pagination,
-                pageSelect:1,
-                totalPages:Math.ceil(state.sortedCountries.length / 10),
-                pageCountries: state.sortedCountries.slice(0,10)
-            }
+            sortedCountries: [...state.sortedCountries].sort((country,next)=>country.population - next.population),    
+            pagination: updatePagination(state,1,state.sortedCountries)
         }
+
         //ordena por poblacion descendente, crea la primer pagina y la selecciona
         case ORDER_POPULATION_DES : return {
             ...state,
             countries: [...state.countries],
             sortedCountries: [...state.sortedCountries].sort((country,next)=>next.population - country.population),
-            pagination: {
-                ...state.pagination,
-                pageSelect:1,
-                totalPages:Math.ceil(state.sortedCountries.length / 10),
-                pageCountries: state.sortedCountries.slice(0,10)
-            }
+            pagination: updatePagination(state,1,state.sortedCountries)
         }
+
         //filtra por continente, crea la primer pagina y la selecciona
         case FILTER_CONTINENT : return {
             ...state,
             countries: [...state.countries],
             sortedCountries: [...state.sortedCountries]
-                .filter( country => country.continent === action.payload),
-            pagination: {
-                ...state.pagination,
-                pageSelect:1,
-                totalPages:Math.ceil(state.sortedCountries.length / 10),
-                pageCountries: state.sortedCountries.slice(0,10)
-            }
+                .filter( country => country.continent === action.payload),     
+            pagination: updatePagination(state,1,state.sortedCountries)
         }
+
         //filtra por actividades, crea la primer pagina y la selecciona
         case FILTER_ACTIVITIES : return {
             ...state,
@@ -147,25 +130,16 @@ export const reducer = (state = initialState,action)=>{
             sortedCountries: [...state.sortedCountries]
                 .filter( country =>country.activities.map(
                     activity=>activity.name
-                    ).includes(action.payload)),
-            pagination: {
-                ...state.pagination,
-                pageSelect:1,
-                totalPages:Math.ceil(state.sortedCountries.length / 10),
-                pageCountries: state.sortedCountries.slice(0,10)
-            }
+                    ).includes(action.payload)),      
+            pagination: updatePagination(state,1,state.sortedCountries)
         }
+
         //quita todos los filtros y ordenamientos, crea la primer pagina y la selecciona
         case RESET_FILTER :return {
             ...state,
             countries: [...state.countries],
-            sortedCountries: [...state.countries],
-            pagination: {
-                ...state.pagination,
-                pageSelect:1,
-                totalPages:Math.ceil(state.sortedCountries.length / 10),
-                pageCountries: state.sortedCountries.slice(0,10)
-            }
+            sortedCountries: [...state.countries],           
+            pagination: updatePagination(state,1,state.sortedCountries)
         }
 
         default : return {

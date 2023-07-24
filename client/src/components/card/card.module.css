@@ -25,9 +25,10 @@
 }
 
 .image {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    height: 75px;
+    border-top-left-radius: calc(-3px + 20px);
+    border-top-right-radius: calc(-3px + 20px);
+    height: 80px;
+    object-fit: cover;
 }
 
 .name{

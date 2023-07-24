@@ -25,3 +25,30 @@
 .cardError h1{
     font-size: 3rem;
 }
+
+.closeError{
+    text-decoration: none;
+    color: #fff;
+    font-weight: 400;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: #dee2e6 solid 3px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.closeError:hover {
+    background-color: #444;
+    filter: brightness(110%);
+}
+
+.closeError:active {
+    background-color: #444;
+    filter: brightness(90%);
+}

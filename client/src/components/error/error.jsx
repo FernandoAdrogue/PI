@@ -26,7 +26,7 @@ const Error = ({status,message,description,reset}) => {
                     {description?<h3>{description}</h3>:null}
                 </div>
                 <div>
-                    {reset&&<button onClick={handleReset}>Cerrar</button>}
+                    {reset&&<button className={styles.closeError} onClick={handleReset}>Cerrar</button>}
                 </div>
             </div> 
         </div>
